@@ -12,8 +12,17 @@
     "@next/font": "13.1.1",
     "eslint": "8.30.0",
     "eslint-config-next": "13.1.1",
+    "moment": "^2.29.4",
     "next": "13.1.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-color": "^2.19.3",
+    "react-date-range": "^1.4.0",
+    "react-device-detect": "^2.2.2",
+    "react-dom": "18.2.0",
+    "react-qr-code": "^2.0.11",
+    "react-select": "^5.7.0",
+    "reactcss": "^1.2.3",
+    "sass": "^1.57.1",
+    "url": "^0.11.0"
   }
 }

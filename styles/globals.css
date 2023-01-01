@@ -1,107 +1,240 @@
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap);
+
+/* @font-face {
+  font-family: hkgrotesk;
+  src: url(/fonts/hkgrotesk-light.eot);
+  src: local("hkgrotesk light"), url(/fonts/hkgrotesk-light.woff) format("woff");
+  font-weight: 300
+} */
+
+/* @font-face {
+  font-family: hkgrotesk;
+  src: url(/fonts/hkgrotesk-regular.eot);
+  src: local("hkgrotesk regular"), url(/fonts/hkgrotesk-regular.woff) format("woff");
+  font-weight: 400
+} */
+
+/* @font-face {
+  font-family: hkgrotesk;
+  src: url(/fonts/hkgrotesk-medium.eot);
+  src: local("hkgrotesk medium"), url(/fonts/hkgrotesk-medium.woff) format("woff");
+  font-weight: 500
+}
+
+@font-face {
+  font-family: hkgrotesk;
+  src: url(/fonts/hkgrotesk-semibold.eot);
+  src: local("hkgrotesk semibold"), url(/fonts/hkgrotesk-semibold.woff) format("woff");
+  font-weight: 600
+}
+
+@font-face {
+  font-family: hkgrotesk;
+  src: url(/fonts/hkgrotesk-bold.eot);
+  src: local("hkgrotesk bold"), url(/fonts/hkgrotesk-bold.woff) format("woff");
+  font-weight: 700
+} */
+
 :root {
-  --max-width: 1100px;
-  --border-radius: 12px;
-  --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
-    'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
-    'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
-
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-
-  --primary-glow: conic-gradient(
-    from 180deg at 50% 50%,
-    #16abff33 0deg,
-    #0885ff33 55deg,
-    #54d6ff33 120deg,
-    #0071ff33 160deg,
-    transparent 360deg
-  );
-  --secondary-glow: radial-gradient(
-    rgba(255, 255, 255, 1),
-    rgba(255, 255, 255, 0)
-  );
-
-  --tile-start-rgb: 239, 245, 249;
-  --tile-end-rgb: 228, 232, 233;
-  --tile-border: conic-gradient(
-    #00000080,
-    #00000040,
-    #00000030,
-    #00000020,
-    #00000010,
-    #00000010,
-    #00000080
-  );
-
-  --callout-rgb: 238, 240, 241;
-  --callout-border-rgb: 172, 175, 176;
-  --card-rgb: 180, 185, 188;
-  --card-border-rgb: 131, 134, 135;
+  --vz-body-bg: #f4f5f6;
+  --vz-body-color: #212529;
+  --vz-body-color-rgb: 33, 37, 41;
+  --vz-vertical-menu-bg: #fff;
+  --vz-vertical-menu-item-color: #6d7080;
+  --vz-vertical-menu-item-hover-color: #405189;
+  --vz-vertical-menu-item-active-color: #405189;
+  --vz-vertical-menu-sub-item-color: #7c7f90;
+  --vz-vertical-menu-sub-item-hover-color: #405189;
+  --vz-vertical-menu-sub-item-active-color: #405189;
+  --vz-vertical-menu-title-color: #919da9;
+  --vz-vertical-menu-bg-dark: #405189;
+  --vz-vertical-menu-item-color-dark: #abb9e8;
+  --vz-vertical-menu-item-hover-color-dark: #fff;
+  --vz-vertical-menu-item-active-color-dark: #fff;
+  --vz-vertical-menu-sub-item-color-dark: #abb9e8;
+  --vz-vertical-menu-sub-item-hover-color-dark: #fff;
+  --vz-vertical-menu-sub-item-active-color-dark: #fff;
+  --vz-vertical-menu-title-color-dark: #838fb9;
+  --vz-header-bg: #fff;
+  --vz-header-item-color: #e9ecef;
+  --vz-header-bg-dark: #405189;
+  --vz-header-item-color-dark: #b0c4d9;
+  --vz-topbar-search-bg: #f3f3f9;
+  --vz-topbar-user-bg: #f3f3f9;
+  --vz-topbar-user-bg-dark: #52639c;
+  --vz-footer-bg: #fff;
+  --vz-footer-color: #98a6ad;
+  --vz-topnav-bg: #fff;
+  --vz-topnav-item-color: #6d7080;
+  --vz-topnav-item-color-active: #405189;
+  --vz-twocolumn-menu-iconview-bg: #fff;
+  --vz-twocolumn-menu-bg: #fff;
+  --vz-twocolumn-menu-iconview-bg-dark: var(--vz-vertical-menu-bg-dark);
+  --vz-twocolumn-menu-bg-dark: #435590;
+  --vz-twocolumn-menu-item-color-dark: var(--vz-vertical-menu-item-color-dark);
+  --vz-twocolumn-menu-item-active-color-dark: #fff;
+  --vz-twocolumn-menu-item-active-bg-dark: rgba(255, 255, 255, 0.15);
+  --vz-boxed-body-bg: #e5e5f2;
+  --vz-heading-color: #495057;
+  --vz-light: #f3f6f9;
+  --vz-light-rgb: 243, 246, 249;
+  --vz-dark: #212529;
+  --vz-dark-rgb: 33, 37, 41;
+  --vz-link-color: #405189;
+  --vz-link-hover-color: #405189;
+  --vz-border-color: #e9ebec;
+  --vz-dropdown-bg: #fff;
+  --vz-dropdown-link-color: #212529;
+  --vz-dropdown-link-hover-color: #1e2125;
+  --vz-dropdown-link-hover-bg: #f3f6f9;
+  --vz-dropdown-border-width: 0px;
+  --vz-card-bg: #fff;
+  --vz-card-cap-bg: #fff;
+  --vz-card-logo-dark: block;
+  --vz-card-logo-light: none;
+  --vz-modal-bg: #fff;
+  --vz-nav-tabs-link-active-color: #495057;
+  --vz-nav-tabs-link-active-bg: #f3f3f9;
+  --vz-accordion-button-active-color: #3a497b;
+  --vz-progress-bg: #eff2f7;
+  --vz-toast-background-color: rgba(255, 255, 255, 0.85);
+  --vz-toast-border-color: rgba(0, 0, 0, 0.1);
+  --vz-toast-header-border-color: rgba(0, 0, 0, 0.05);
+  --vz-list-group-hover-bg: #f3f6;
+  --vz-popover-bg: #fff;
+  --vz-pagination-hover-bg: #eff2f7;
+  --vz-input-bg: #fff;
+  --vz-input-border: #ced4da;
+  --vz-input-focus-border: #a0a8c4;
+  --vz-input-disabled-bg: #eff2f7;
+  --vz-input-group-addon-bg: #eff2f7;
+  --vz-input-check-border: var(--vz-input-border)
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-
-    --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
-    --secondary-glow: linear-gradient(
-      to bottom right,
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0),
-      rgba(1, 65, 255, 0.3)
-    );
-
-    --tile-start-rgb: 2, 13, 46;
-    --tile-end-rgb: 2, 5, 19;
-    --tile-border: conic-gradient(
-      #ffffff80,
-      #ffffff40,
-      #ffffff30,
-      #ffffff20,
-      #ffffff10,
-      #ffffff10,
-      #ffffff80
-    );
-
-    --callout-rgb: 20, 20, 20;
-    --callout-border-rgb: 108, 108, 108;
-    --card-rgb: 100, 100, 100;
-    --card-border-rgb: 200, 200, 200;
-  }
+[data-layout-mode=dark] {
+  --vz-gray-100: #1a1d21;
+  --vz-gray-200: #212529;
+  --vz-gray-300: #2a2f34;
+  --vz-gray-400: #878a99;
+  --vz-gray-500: #adb5bd;
+  --vz-gray-600: #bfc8e2;
+  --vz-gray-700: #ced4da;
+  --vz-gray-800: #eff2f7;
+  --vz-gray-900: #f3f6f9;
+  --vz-body-bg: #1a1d21;
+  --vz-body-color: #ced4da;
+  --vz-body-color-rgb: 206, 212, 218;
+  --vz-vertical-menu-bg: #fff;
+  --vz-vertical-menu-item-color: #5f6270;
+  --vz-vertical-menu-item-hover-color: #405189;
+  --vz-vertical-menu-item-active-color: #405189;
+  --vz-vertical-menu-sub-item-color: #686b7b;
+  --vz-vertical-menu-sub-item-hover-color: #405189;
+  --vz-vertical-menu-sub-item-active-color: #405189;
+  --vz-vertical-menu-title-color: #878a99;
+  --vz-vertical-menu-bg-dark: #212529;
+  --vz-vertical-menu-item-color-dark: #878a99;
+  --vz-vertical-menu-item-hover-color-dark: #fff;
+  --vz-vertical-menu-item-active-color-dark: #fff;
+  --vz-vertical-menu-sub-item-color-dark: #7c7f90;
+  --vz-vertical-menu-sub-item-hover-color-dark: #fff;
+  --vz-vertical-menu-sub-item-active-color-dark: #fff;
+  --vz-vertical-menu-title-color-dark: #5f6270;
+  --vz-header-bg: #292e32;
+  --vz-header-item-color: #e9ecef;
+  --vz-header-bg-dark: #405189;
+  --vz-header-item-color-dark: #b0c4d9;
+  --vz-topbar-search-bg: #202328;
+  --vz-topbar-user-bg: #31373c;
+  --vz-topbar-user-bg-dark: #52639c;
+  --vz-footer-bg: #212529;
+  --vz-footer-color: #878a99;
+  --vz-topnav-bg: #272b30;
+  --vz-topnav-item-color: #878a99;
+  --vz-topnav-item-color-active: #fff;
+  --vz-twocolumn-menu-iconview-bg: #fff;
+  --vz-twocolumn-menu-bg: #fff;
+  --vz-twocolumn-menu-iconview-bg-dark: var(--vz-vertical-menu-bg-dark);
+  --vz-twocolumn-menu-bg-dark: #30363a;
+  --vz-twocolumn-menu-item-color-dark: var(--vz-vertical-menu-item-color-dark);
+  --vz-twocolumn-menu-item-active-color-dark: #fff;
+  --vz-twocolumn-menu-item-active-bg-dark: rgba(255, 255, 255, 0.15);
+  --vz-boxed-body-bg: #111316;
+  --vz-heading-color: #ced4da;
+  --vz-light: #2a2f34;
+  --vz-light-rgb: 42, 47, 52;
+  --vz-dark: #eff2f7;
+  --vz-dark-rgb: 239, 242, 247;
+  --vz-link-color: #ced4da;
+  --vz-link-hover-color: #ced4da;
+  --vz-border-color: #32383e;
+  --vz-dropdown-bg: #292e33;
+  --vz-dropdown-link-color: #adb5bd;
+  --vz-dropdown-link-hover-color: #b9bfc4;
+  --vz-dropdown-link-hover-bg: #2f343a;
+  --vz-dropdown-border-width: 1px;
+  --vz-card-bg: #212529;
+  --vz-card-cap-bg: #212529;
+  --vz-card-logo-dark: none;
+  --vz-card-logo-light: block;
+  --vz-modal-bg: #212529;
+  --vz-nav-tabs-link-active-color: #f3f6f9;
+  --vz-nav-tabs-link-active-bg: #2a2f34;
+  --vz-accordion-button-active-color: #fff;
+  --vz-progress-bg: #2a2f34;
+  --vz-toast-background-color: rgba(42, 47, 52, 0.85);
+  --vz-toast-border-color: rgba(255, 255, 255, 0.1);
+  --vz-toast-header-border-color: rgba(255, 255, 255, 0.05);
+  --vz-list-group-hover-bg: #272b30;
+  --vz-popover-bg: #23282c;
+  --vz-pagination-hover-bg: #2a2f34;
+  --vz-input-bg: #262a2f;
+  --vz-input-border: #2a2f34;
+  --vz-input-focus-border: #33393f;
+  --vz-input-disabled-bg: #212529;
+  --vz-input-group-addon-bg: #2a2f34;
+  --vz-input-check-border: #33393f
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+[data-sidebar=gradient] {
+  --vz-vertical-menu-bg-gradient: linear-gradient(to right, var(--vz-primary), var(--vz-success));
+  --vz-vertical-menu-border-gradient: var(--vz-success);
+  --vz-twocolumn-menu-bg-dark: var(--vz-success)
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+[data-sidebar=gradient-2] {
+  --vz-vertical-menu-bg-gradient: linear-gradient(to right, var(--vz-info), var(--vz-secondary));
+  --vz-vertical-menu-border-gradient: var(--vz-secondary);
+  --vz-twocolumn-menu-bg-dark: var(--vz-secondary)
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+[data-sidebar=gradient-3] {
+  --vz-vertical-menu-bg-gradient: linear-gradient(to right, var(--vz-info), var(--vz-success));
+  --vz-vertical-menu-border-gradient: var(--vz-success);
+  --vz-twocolumn-menu-bg-dark: var(--vz-success)
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+[data-sidebar=gradient-4] {
+  --vz-vertical-menu-bg-gradient: linear-gradient(to right, var(--vz-dark), var(--vz-primary));
+  --vz-vertical-menu-border-gradient: var(--vz-primary);
+  --vz-twocolumn-menu-bg-dark: var(--vz-primary)
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+.card {
+  box-shadow: 0 2px 5px rgb(56 65 74 / 15%);
+}
+
+.sidebar-background {
+  background-color: #F2F3F3;
+  color: #000 !important;
+}
+
+.no-gutters {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.ml-auto {
+  margin-left: auto;
 }
