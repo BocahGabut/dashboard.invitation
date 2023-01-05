@@ -46,8 +46,26 @@ const NavbarLeft = ({activeSidebar}) => {
                             </li>
                             <li className="nav-item">
                                 <Link href='/settings' className={`nav-link menu-link ${(activeSidebar === 'settings') ? 'active' : ''}`}>
-                                    <IconsI icons='fa-regular fa-gear' />
+                                    <IconsI icons='fa-duotone fa-gear' />
                                     <span data-key="t-settings">Settings</span>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link href='/guest' className={`nav-link menu-link ${(activeSidebar === 'guest') ? 'active' : ''}`}>
+                                    <IconsI icons='fa-duotone fa-user-group' />
+                                    <span data-key="t-guest">Tamu</span>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link href='/messages' className={`nav-link menu-link ${(activeSidebar === 'messages') ? 'active' : ''}`}>
+                                    <IconsI icons='fa-duotone fa-paper-plane-top' />
+                                    <span data-key="t-messages">Kirim Undangan</span>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link href='/checkins' className={`nav-link menu-link ${(activeSidebar === 'checkins') ? 'active' : ''}`}>
+                                    <IconsI icons='fa-duotone fa-book-open-cover' />
+                                    <span data-key="t-checkins">Buku Tamu</span>
                                 </Link>
                             </li>
                         </ul>

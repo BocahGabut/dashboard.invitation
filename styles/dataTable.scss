@@ -1,0 +1,101 @@
+.iSAVrt {
+    height          : 42px;
+    background-color: #f3f6f9 !important;
+    min-height      : 42px !important;
+    border          : 1px solid rgba(126, 122, 122, 0.12) !important;
+
+    .glyQNg {
+
+        .dEUlpH,
+        .fsBPnz {
+            display        : flex;
+            justify-content: space-between;
+
+            .hbotQl {
+                font-size  : 12.8px;
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+select.jaZsat {
+    &:focus-visible {
+        outline: 1px rgba(0, 0, 0, 0.12) !important;
+        border : 1px rgba(0, 0, 0, 0.12) !important;
+    }
+}
+
+.WQNxq {
+    .dApqnJ {
+        .kVrXuC {
+            display            : table !important;
+            border-spacing     : 0 10px !important;
+            border-radius      : 0 !important;
+            border-width       : 0 !important;
+            --tw-border-opacity: 1 !important;
+            border-color       : rgb(239 240 242/var(--tw-border-opacity)) !important;
+            clear              : both;
+            margin-top         : 6px !important;
+            margin-bottom      : 6px !important;
+            max-width          : none !important;
+            border-collapse    : separate !important;
+
+            .dOIzqm {
+                .dwPlXY {
+                    margin                    : 7px 0;
+                    transition-property       : all;
+                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                    transition-duration       : 0.2s;
+
+                    border-style: solid;
+                    border-width: 1px;
+                    border-color: rgba(126, 122, 122, 0.12);
+
+                    &:hover {
+                        transform: translateY(-1px);
+                        cursor   : pointer;
+                        transition-property: color, background-color, border-color, text-decoration-color, fill, stroke,
+                            opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+                        box-shadow: 0 0 rgb(0 0 0 / 0%), 0 0 rgb(0 0 0 / 0%), 0 0 rgb(0 0 0 / 0%), 0 0 rgb(0 0 0 / 0%),
+                            0 10px 25px -5px rgb(0 0 0 / 3%), 0 5px 10px -5px rgb(0 0 0 / 5%);
+                    }
+
+                    &:last-of-type {
+                        border-bottom-style: solid;
+                        border-bottom-width: 1px;
+                        border-bottom-color: rgba(126, 122, 122, 0.12);
+                    }
+                }
+            }
+        }
+    }
+}
+
+nav.gKbhqU {
+    border-top-width: 0px !important;
+}
+
+.WQNxq {
+    &::-webkit-scrollbar-track {
+        background-color  : #ffffff;
+    }
+
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+        background-color: #ffffff;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color  : #ffffff;
+        transition: .4s ease-out;
+    }
+    transition: .4s ease-out;
+    &:hover{
+        transition: .4s ease-out;
+        &::-webkit-scrollbar-thumb {
+            background-color  : #d6d7d9;
+        }
+    }
+}
