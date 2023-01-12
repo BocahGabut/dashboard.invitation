@@ -4,8 +4,48 @@ import Layout from "../Components/Layout";
 
 const IconsI = dynamic(() => import('../Components/Utils/Icons'), { ssr: false })
 const DataTableComponent = dynamic(() => import('../Components/DataTableComponent'), { ssr: false })
-
 const Guest = () => {
+
+    const columns = [
+        {
+            name: 'Title',
+            selector: row => row.title,
+            sortable: true,
+        },
+        {
+            name: 'Year',
+            selector: row => row.year,
+            sortable: true,
+        },
+        {
+            name: 'Title',
+            selector: row => row.title,
+            sortable: true,
+        },
+        {
+            name: 'Year',
+            selector: row => row.year,
+            sortable: true,
+        },
+        {
+            name: 'Title',
+            selector: row => row.title,
+            sortable: true,
+        },
+        {
+            name: 'Year',
+            selector: row => row.year,
+            sortable: true,
+        },
+    ];
+
+    const data = [
+        {
+            id: 1,
+            title: 'Beetlejuice',
+        },
+    ]
+
     return (
         <>
             <Layout activeSidebar='guest'>
@@ -64,7 +104,7 @@ const Guest = () => {
                                         </div>
                                     </div>
                                     <div className="col-md-12 mt-5">
-                                        <DataTableComponent />
+                                        <DataTableComponent columns={columns} data={data} />
                                     </div>
                                 </div>
                             </div>

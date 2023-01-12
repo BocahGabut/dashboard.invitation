@@ -8,9 +8,59 @@
 
         .dEUlpH,
         .fsBPnz {
-            display        : flex;
+            display: flex;
             justify-content: space-between;
+            position: relative;
+            &:hover{
+                opacity: .7;
+                .gnetL{
+                    &::before,&::after{
+                        opacity: .7;
+                    }
+                }
+            }
+            .gnetL,
+            .bBpdsi,
+            .feGxUP,
+            .exsEIO{
+                opacity: 1 !important;
+                display: flex;
+                position: absolute;
+                right: -12px;
+                &::before{
+                    content: "↑";
+                    right: 2em;
+                    position: absolute;
+                    top: 3px;
+                }
+                &::after{
+                    right: 1.5em;
+                    content: "↓";
+                    position: absolute;
+                    top: 5px;
 
+                }
+                &::before,&::after{
+                    display: block;
+                    opacity: .3;
+                    font-size: .9rem;
+                    font-family: "Material Design Icons";
+                }
+            }
+            .feGxUP,
+            .exsEIO{
+                transform: none;
+            }
+            .bBpdsi{
+                &::before{
+                    opacity: 1;
+                }
+            }
+            .feGxUP{
+                &::after{
+                    opacity: 1;
+                }
+            }
             .hbotQl {
                 font-size  : 12.8px;
                 font-weight: 600;
