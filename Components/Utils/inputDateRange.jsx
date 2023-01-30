@@ -15,13 +15,14 @@ class InputDateRange extends Component{
         this.state = {
             showDate: false,
             picker: true,
-            date: new Date(),
+            date: (this.props.defaultValue) ? new Date(this.props.defaultValue) : new Date(),
             selectionRange : {
-                startDate: new Date(),
-                endDate: new Date(),
+                startDate: (this.props.defaultValue) ? new Date(this.props.defaultValue) : new Date(),
+                endDate: (this.props.defaultValue) ? new Date(this.props.defaultValue) : new Date(),
                 key: 'selection',
             }
         }
+        if(this.props.dates) (this.props.defaultValue) ? this.props.dates(new Date(new Date(this.props.defaultValue).toISOString()).getTime() + 7 * 60 * 60 * 1000) : this.props.dates(new Date(new Date().toISOString()).getTime() + 7 * 60 * 60 * 1000)
     }
 
     componentDidMount() {
@@ -59,6 +60,8 @@ class InputDateRange extends Component{
             picker:true
         })
         this.showHideDate(false)
+
+        if(this.props.dates) this.props.dates(new Date(new Date(dates.selection.startDate).toISOString()).getTime() + 7 * 60 * 60 * 1000)
     }
 
     render() {

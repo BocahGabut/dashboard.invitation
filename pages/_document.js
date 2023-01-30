@@ -35,6 +35,28 @@ function MyDocument(props) {
               <Script src="/font-awesome/js/all.min.js" strategy="beforeInteractive" />
             </body>
           </Html>
+        : (pageUrl.indexOf('/login') != '-1' || pageUrl.indexOf('/register') != '-1') ?
+            <Html
+            lang="en"
+            data-layout="vertical"
+            data-topbar="light"
+            data-sidebar="light"
+            data-sidebar-size="lg"
+            data-sidebar-image="none"
+            data-layout-style="default"
+            data-layout-mode="light"
+            data-layout-width="fluid"
+            data-layout-position="fixed"
+          >
+            <Head>
+              <link href="/font-awesome/css/all.css" />
+            </Head>
+            <body>
+              <Main />
+              <NextScript />
+              <Script src="/font-awesome/js/all.min.js" strategy="beforeInteractive" />
+            </body>
+          </Html>
         :
         <Html
           lang="en"
@@ -67,7 +89,11 @@ function MyDocument(props) {
             <Script src="/libs/bootstrap/js/bootstrap.bundle.min.js" strategy="beforeInteractive" />
             <Script src="/font-awesome/js/all.min.js" strategy="beforeInteractive" />
             <Script src="/libs/feather-icons/feather.min.js" strategy="beforeInteractive" />
-            <Script src="/js/main.js" strategy="lazyOnload" />
+            {
+              (pageUrl.indexOf('/complete-account') != '-1' || pageUrl.indexOf('/verification-number') != '-1' || pageUrl.indexOf('/start') != '-1') ? ''
+              :
+              <Script src="/js/main.js" strategy="lazyOnload" />
+            }
           </body>
         </Html>
       }
