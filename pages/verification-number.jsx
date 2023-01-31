@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import Layout from "../Components/Layout";
 
 import dynamic from "next/dynamic";
@@ -13,9 +12,10 @@ const IconsI = dynamic(() => import('../Components/Utils/Icons'), { ssr: false }
 
 import Cookies from "js-cookie";
 import Router from "next/router";
+import { useEffect, useState } from "react";
 import { rootApi } from "../Context/config-app";
 
-const verificationNumber = () => {
+const VerificationNumber = () => {
     const [accountData, setAccountData] = useState({})
     const [verifPage, setverifPage] = useState(false)
     const [verificationCode, setVerificationCode] = useState('')
@@ -146,4 +146,4 @@ const verificationNumber = () => {
     )
 }
 
-export default verificationNumber
+export default VerificationNumber
