@@ -1,4 +1,5 @@
-export const rootApi = 'http://127.0.0.1:8000'
+export const rootApi = 'http://buywedding.cloud'
+// export const rootApi = 'http://127.0.0.1:8000'
 
 import axios from "axios";
 import Cookies from "js-cookie";

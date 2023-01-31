@@ -1,53 +1,83 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+import L from "leaflet";
 
 import { OpenStreetMapProvider, SearchControl } from 'leaflet-geosearch';
-import Head from "next/head";
-import { useState } from "react";
-import { MapContainer, Marker, Popup, TileLayer, useMapEvents } from 'react-leaflet';
-
-const searchControl = new SearchControl({
-    provider: new OpenStreetMapProvider(),
-    style: 'bar',
-});
-
-function LocationMarker() {
-    const [position, setPosition] = useState(null)
-    const map = useMapEvents({
-        click() {
-            map.locate()
-        },
-        locationfound(e) {
-            setPosition(e.latlng)
-            map.flyTo(e.latlng, map.getZoom())
-        },
-    })
-
-    return position === null ? null : (
-        <Marker position={position}>
-            <Popup>You are here</Popup>
-        </Marker>
-    )
-}
 
 const Maps = () => {
+    const [positionY, setPositionY] = useState(-6.1753936);
+    const [positionX, setPositionX] = useState(106.82718601871409);
 
+    useEffect(() => {
+            const searchControl = new SearchControl({
+            notFoundMessage: 'Sorry, that address could not be found.',
+            provider: new OpenStreetMapProvider(),
+            style: 'bar',
+        });
+
+        var customMarker = L.icon({
+            iconUrl: 'images/map-marker.png',
+            shadowUrl: '',
+
+            iconSize:     [30, 40], // size of the icon
+            shadowSize:   [0, 0], // size of the shadow
+            iconAnchor:   [17, 40], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+
+        // Creating map options
+         var mapOptions = {
+            center: [positionY, positionX],
+            // center: [Y Position, X Position],
+             zoom: 15,
+             scrollWheelZoom: true,
+            icon: customMarker
+        }
+
+
+        var map = L.DomUtil.get("map");
+
+        if (map != null) {
+            map._leaflet_id = null;
+            map = new L.map('map', mapOptions);
+
+            map.remove()
+        }
+
+         // Creating a map object
+         map = new L.map('map', mapOptions);
+
+         // Creating a Layer object
+         var layer = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+         L.marker([positionY, positionX], {icon: customMarker}).addTo(map);
+
+        // Adding layer to the map
+        map.addLayer(layer);
+        map.addControl(searchControl);
+
+        const leaftletPane = document.querySelectorAll('.leaflet-pane.leaflet-map-pane')
+
+        setTimeout(() => {
+            if (leaftletPane.length > 1) {
+                leaftletPane[1].remove()
+                document.querySelectorAll('.leaflet-control-container')[1].remove()
+                document.querySelectorAll('.leaflet-control-geosearch.leaflet-geosearch-bar')[1].remove()
+            }
+        }, 350)
+
+        function searchEventHandler(result) {
+            console.log(result.location);
+            const location = result.location
+            setPositionX(location.x)
+            setPositionY(location.y)
+        }
+
+        map.on('geosearch/showlocation', searchEventHandler);
+    }, [positionY,positionX]);
     return (
         <>
-            <Head>
-                <link
-                    rel="stylesheet"
-                    href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css"
-                />
-            </Head>
-            <div className="container-maps">
-                <MapContainer
-                    center={{ lat: 51.505, lng: -0.09 }}
-                    zoom={13}
-                    scrollWheelZoom={true}>
-                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; <a href=&quot;https://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> contributors" />
-                    <LocationMarker />
-                </MapContainer>
-            </div>
+            <div id="map"></div>
         </>
     )
 }

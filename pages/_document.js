@@ -72,6 +72,10 @@ function MyDocument(props) {
         >
           <Head>
             <link href="/font-awesome/css/all.css" />
+            <link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet-geosearch@3.0.0/dist/geosearch.css"
+/>
             <script src="/js/layout.js" async></script>
             <Script src="https://cdn.lordicon.com/fudrjiwc.js" strategy="beforeInteractive" />
             {/* <link href="/libs/nouislider/nouislider.min.css" /> */}

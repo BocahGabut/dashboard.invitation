@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import Modal from 'react-bootstrap/Modal';
 import InputDateRange from "../../Utils/inputDateRange";
 
-import Maps from "../../maps";
+import dynamic from "next/dynamic";
+const Maps = dynamic(() => import('../../maps'), { ssr: false })
 
 const FormEventDay = ({ setaddEvents, propsData }) => {
     const [show, setShow] = useState(true);
