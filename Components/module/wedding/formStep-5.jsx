@@ -3,7 +3,8 @@ import React from "react";
 
 const IconsI = dynamic(() => import('../../Utils/Icons'), { ssr: false })
 
-const FormStep5 = () => {
+const FormStep5 = ({ subDomain,publish,setSubDomain,setPublish }) => {
+
     return (
         <>
             <form id="0b2c308432d8ff94f2510e81f47f06f3">
@@ -23,7 +24,7 @@ const FormStep5 = () => {
                                     Alamat Website
                                 </label>
                                 <div className="input-group">
-                                    <input type="text" className="form-control" style={{ textAlign:'right' }} />
+                                    <input onChange={(e) => setSubDomain(e.target.value)} value={subDomain} type="text" className="form-control" style={{ textAlign:'right' }} />
                                     <span className="input-group-text" style={{ backgroundColor:'#fff',fontWeight:700 }}>.invedo.id</span>
                                 </div>
                                 <p className="text-muted m-0" style={{ fontSize: 11 }}>Buat nama domain yang unik.</p>
@@ -37,7 +38,7 @@ const FormStep5 = () => {
                                 <div className="row">
                                     <div className="col-md-6">
                                         <label htmlFor="publish-now" className="form-publish">
-                                            <input type="radio" id="publish-now" name="is_publish" />
+                                            <input checked={(publish === 'now') ? true : false} type="radio" id="publish-now" name="is_publish" onChange={(e) => setPublish('now')} />
                                             <div className="row no-gutters align-items-center">
                                                 <div className="col-auto text-center">
                                                     <IconsI icons='fa fa-check fa-fw fa-lg' />
@@ -51,7 +52,7 @@ const FormStep5 = () => {
                                     </div>
                                     <div className="col-md-6">
                                         <label htmlFor="publish-later" className="form-publish">
-                                            <input type="radio" id="publish-later" name="is_publish" />
+                                            <input checked={(publish === 'later') ? true : false} type="radio" id="publish-later" name="is_publish" onChange={(e) => setPublish('later')} />
                                             <div className="row no-gutters align-items-center">
                                                 <div className="col-auto text-center">
                                                     <IconsI icons='far fa-clock fa-fw fa-lg' />

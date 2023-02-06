@@ -1,83 +1,148 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import L from "leaflet";
-
-import { OpenStreetMapProvider, SearchControl } from 'leaflet-geosearch';
-
-const Maps = () => {
-    const [positionY, setPositionY] = useState(-6.1753936);
-    const [positionX, setPositionX] = useState(106.82718601871409);
+const Maps = ({ getPlaces, onClick, defaultCenter }) => {
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-            const searchControl = new SearchControl({
-            notFoundMessage: 'Sorry, that address could not be found.',
-            provider: new OpenStreetMapProvider(),
-            style: 'bar',
-        });
+        function initAutocomplete() {
+            // The map, centered at Uluru
+            const center = (defaultCenter) ? defaultCenter : { lat: -6.1752483965250216, lng: 106.82716353036908 }
 
-        var customMarker = L.icon({
-            iconUrl: 'images/map-marker.png',
-            shadowUrl: '',
+            const map = new google.maps.Map(document.getElementById("map"), {
+                center: center,
+                zoom: 13,
+                mapTypeId: "roadmap",
+                disableDefaultUI: true,
+            });
 
-            iconSize:     [30, 40], // size of the icon
-            shadowSize:   [0, 0], // size of the shadow
-            iconAnchor:   [17, 40], // point of the icon which will correspond to marker's location
-            shadowAnchor: [4, 62],  // the same for the shadow
-            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-        });
-
-        // Creating map options
-         var mapOptions = {
-            center: [positionY, positionX],
-            // center: [Y Position, X Position],
-             zoom: 15,
-             scrollWheelZoom: true,
-            icon: customMarker
-        }
-
-
-        var map = L.DomUtil.get("map");
-
-        if (map != null) {
-            map._leaflet_id = null;
-            map = new L.map('map', mapOptions);
-
-            map.remove()
-        }
-
-         // Creating a map object
-         map = new L.map('map', mapOptions);
-
-         // Creating a Layer object
-         var layer = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
-         L.marker([positionY, positionX], {icon: customMarker}).addTo(map);
-
-        // Adding layer to the map
-        map.addLayer(layer);
-        map.addControl(searchControl);
-
-        const leaftletPane = document.querySelectorAll('.leaflet-pane.leaflet-map-pane')
-
-        setTimeout(() => {
-            if (leaftletPane.length > 1) {
-                leaftletPane[1].remove()
-                document.querySelectorAll('.leaflet-control-container')[1].remove()
-                document.querySelectorAll('.leaflet-control-geosearch.leaflet-geosearch-bar')[1].remove()
+            if (defaultCenter) {
+                const icon = {
+                    url: '/images/map-marker.png',
+                    // url: place.icon,
+                    size: new google.maps.Size(30, 40),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(30, 40),
+                };
+                new google.maps.Marker({
+                    map,
+                    icon,
+                    title: '',
+                    position: defaultCenter,
+                    animation: google.maps.Animation.DROP
+                })
             }
-        }, 350)
 
-        function searchEventHandler(result) {
-            console.log(result.location);
-            const location = result.location
-            setPositionX(location.x)
-            setPositionY(location.y)
+            const input = document.getElementById("pac-input");
+            const searchBox = new google.maps.places.SearchBox(input);
+
+            map.addListener("bounds_changed", () => {
+                searchBox.setBounds(map.getBounds());
+            });
+
+            let markers = [];
+
+            searchBox.addListener("places_changed", () => {
+                const places = searchBox.getPlaces();
+
+                if (places.length == 0) {
+                    return;
+                }
+
+                // Clear out the old markers.
+                markers.forEach((marker) => {
+                    marker.setMap(null);
+                });
+                markers = [];
+
+                // For each place, get the icon, name and location.
+                const bounds = new google.maps.LatLngBounds();
+
+                places.forEach((place) => {
+                    if (!place.geometry || !place.geometry.location) {
+                        console.log("Returned place contains no geometry");
+                        return;
+                    }
+
+                    const icon = {
+                        url: '/images/map-marker.png',
+                        // url: place.icon,
+                        size: new google.maps.Size(30, 40),
+                        origin: new google.maps.Point(0, 0),
+                        anchor: new google.maps.Point(17, 34),
+                        scaledSize: new google.maps.Size(30, 40),
+                    };
+
+                    if (getPlaces) getPlaces(place)
+                    // Create a marker for each place.
+                    markers.push(
+                        new google.maps.Marker({
+                            map,
+                            icon,
+                            title: place.name,
+                            position: place.geometry.location,
+                            animation: google.maps.Animation.DROP
+                        })
+                    );
+                    if (place.geometry.viewport) {
+                        // Only geocodes have viewport.
+                        bounds.union(place.geometry.viewport);
+                    } else {
+                        bounds.extend(place.geometry.location);
+                    }
+                });
+                map.fitBounds(bounds);
+            });
+            map.addListener('click', (event) => {
+                const icon = {
+                    url: '/images/map-marker.png',
+                    // url: place.icon,
+                    size: new google.maps.Size(30, 40),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(30, 40),
+                };
+                if (onClick) onClick(event)
+                markers.forEach((marker) => {
+                    marker.setMap(null);
+                });
+                markers = [];
+                markers.push(
+                    new google.maps.Marker({
+                        map,
+                        icon,
+                        position: event.latLng,
+                        animation: google.maps.Animation.DROP
+                    })
+                );
+            })
+            setLoading(false)
         }
 
-        map.on('geosearch/showlocation', searchEventHandler);
-    }, [positionY,positionX]);
+        if (window.google) {
+            initAutocomplete();
+        }
+
+        // kode ini akan memastikan bahwa initAutocomplete selalu dipanggil
+        // saat komponen di-mount, meskipun window.google sudah terdefinisi
+        return () => {
+            window.initAutocomplete = undefined;
+        };
+    }, [loading]);
     return (
         <>
-            <div id="map"></div>
+            <div className="container-map">
+                <div id='pac-box' className='w-100 p-3' style={{ position: 'absolute', left: 0, top: 0, zIndex: 99 }}>
+                    <input
+                        id="pac-input"
+                        className="controls"
+                        type="text"
+                        placeholder="Cari Lokasi..."
+                    />
+                </div>
+                <div id="map" style={{ width: '100%', height: 320 }} />
+            </div>
+            {/* <Script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVeLGFORO5so3kaKIwAmfAH9s-9NKbDVs&callback=initAutocomplete&libraries=places&v=weekly" async defer /> */}
         </>
     )
 }

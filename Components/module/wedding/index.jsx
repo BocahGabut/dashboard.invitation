@@ -15,7 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { rootApi } from "../../../Context/config-app";
 
 const Wedding = ({ setLoadInvitation, propsData }) => {
-    const [formStep, setFormStep] = useState(3)
+    const [formStep, setFormStep] = useState(1)
     const [progress, setProgress] = useState(0)
 
     const [countPost, setCountPost] = useState(0)
@@ -32,6 +32,10 @@ const Wedding = ({ setLoadInvitation, propsData }) => {
     const male_bio = useRef('')
     const male_instagram = useRef('')
 
+    //form step 5
+    const [subDomain, setSubDomain] = useState((propsData.url) ? propsData.url : '')
+    const [publish, setPublish] = useState((propsData.status) ? ((propsData.status === 1) ? 'now' : 'later') : '')
+
     const handleSaveStep1 = () => {
         axios({
             method: 'POST',
@@ -44,14 +48,14 @@ const Wedding = ({ setLoadInvitation, propsData }) => {
                 _judul: judul.current.value,
                 _dates: dates,
                 _type: 1,
-                _id:(Cookies.get('relix-prefix')) ? Cookies.get('relix-prefix') : ''
+                _id: (Cookies.get('relix-prefix')) ? Cookies.get('relix-prefix') : ''
             }
         }).then(response => {
             const result = response.data
-            setCountPost(countPost+1)
+            setCountPost(countPost + 1)
             if (result.status.indexOf('*OK*') != '-1') {
                 setLoadInvitation(countPost)
-                Cookies.set('relix-prefix', result.data,{ secure: true,expires: 1 });
+                Cookies.set('relix-prefix', result.data, { secure: true, expires: 1 });
             }
         }).catch((err) => console.log(err))
     }
@@ -66,24 +70,91 @@ const Wedding = ({ setLoadInvitation, propsData }) => {
             },
             data: {
                 male: {
-                    male_name:male_name.current.value,
-                    male_bio:male_bio.current.value,
-                    male_instagram:male_instagram.current.value,
+                    male_name: male_name.current.value,
+                    male_bio: male_bio.current.value,
+                    male_instagram: male_instagram.current.value,
                 },
                 female: {
-                    female_name:female_name.current.value,
-                    female_bio:female_bio.current.value,
-                    female_instagram:female_instagram.current.value,
+                    female_name: female_name.current.value,
+                    female_bio: female_bio.current.value,
+                    female_instagram: female_instagram.current.value,
                 },
-                _id:(Cookies.get('relix-prefix')) ? Cookies.get('relix-prefix') : ''
+                _id: (Cookies.get('relix-prefix')) ? Cookies.get('relix-prefix') : ''
             }
         }).then(response => {
             const result = response.data
-            setCountPost(countPost+1)
+            setCountPost(countPost + 1)
             if (result.status.indexOf('*OK*') != '-1') {
                 setLoadInvitation(countPost)
             }
         }).catch((err) => console.log(err))
+    }
+
+    function validateSubdomain(subdomain) {
+        const pattern = /^[a-zA-Z0-9-]{6,16}$/;
+        return pattern.test(subdomain);
+    }
+
+    const handleSaveStep5 = () => {
+        if (subDomain === '') {
+            return toast.error('Silahkan masukan subdomain yang ingin anda gunakan', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            })
+        }
+        if (!validateSubdomain(subDomain)) {
+            return toast.error('Subdomain harus antara 6 - 16 karakter huruf atau tanda "-".', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            })
+        }
+        axios({
+            method: 'POST',
+            url: `${rootApi}/api/invitation/status`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Cookies.get('auth-prefix')}`,
+            },
+            data: {
+                _subDomain: subDomain,
+                _publish: publish,
+                _id: (Cookies.get('relix-prefix')) ? Cookies.get('relix-prefix') : ''
+            }
+        }).then(response => {
+            const result = response.data
+            if (result.status.indexOf('*OK*') != '-1') {
+                setCountPost(countPost + 1)
+                setLoadInvitation(countPost)
+                Cookies.set('relix-prefix', result.data, { secure: true, expires: 1 });
+
+                setFormStep(6), setProgress(100)
+            } else if (result.status.indexOf('*SFD*') != '-1') {
+                return toast.error('Subdomain sudah di gunakan, Silahkan coba yang lain.', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                })
+            }
+        }).catch((err) => {
+            console.log(err)
+        })
     }
 
     const validationForm = () => {
@@ -104,7 +175,7 @@ const Wedding = ({ setLoadInvitation, propsData }) => {
         validationForm()
         switch (formStep) {
             case 1:
-            return handleSaveStep1(), setFormStep(2), setProgress(20)
+                return handleSaveStep1(), setFormStep(2), setProgress(20)
             case 2:
                 return handleSaveStep2(), setFormStep(3), setProgress(40)
             case 3:
@@ -112,7 +183,7 @@ const Wedding = ({ setLoadInvitation, propsData }) => {
             case 4:
                 return setFormStep(5), setProgress(80)
             case 5:
-                return setFormStep(6), setProgress(100)
+                handleSaveStep5()
         }
     }
 
@@ -181,13 +252,13 @@ const Wedding = ({ setLoadInvitation, propsData }) => {
                                     <FormStep2 propsData={propsData.couple} female_name={female_name} female_bio={female_bio} female_instagram={female_instagram} male_name={male_name} male_bio={male_bio} male_instagram={male_instagram} />
                                 </div>
                                 <div className={`tab-pane fade show ${(formStep === 3) ? 'active' : ''}`} style={{ display: `${(formStep === 3) ? 'block' : 'none'}` }} id="pills-gen-info" role="tabpanel" aria-labelledby="pills-gen-info-tab">
-                                    <FormStep3 propsData={propsData.events} />
+                                    <FormStep3 propsData={propsData.events} setLoadInvitation={setLoadInvitation} countPost={countPost} setCountPost={setCountPost} />
                                 </div>
                                 <div className={`tab-pane fade show ${(formStep === 4) ? 'active' : ''}`} style={{ display: `${(formStep === 4) ? 'block' : 'none'}` }} id="pills-gen-info" role="tabpanel" aria-labelledby="pills-gen-info-tab">
                                     <FormStep4 />
                                 </div>
                                 <div className={`tab-pane fade show ${(formStep === 5) ? 'active' : ''}`} style={{ display: `${(formStep === 5) ? 'block' : 'none'}` }} id="pills-gen-info" role="tabpanel" aria-labelledby="pills-gen-info-tab">
-                                    <FormStep5 />
+                                    <FormStep5 subDomain={subDomain} setSubDomain={setSubDomain} publish={publish} setPublish={setPublish} />
                                 </div>
                                 <div className={`tab-pane fade show ${(formStep === 6) ? 'active' : ''}`} style={{ display: `${(formStep === 6) ? 'block' : 'none'}` }} id="pills-gen-info" role="tabpanel" aria-labelledby="pills-gen-info-tab">
                                     <FormStep6 />
