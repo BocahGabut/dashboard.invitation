@@ -1,5 +1,5 @@
-// export const rootApi = 'https://buywedding.cloud'
-export const rootApi = 'http://127.0.0.1:8000'
+export const rootApi = 'https://buywedding.cloud'
+// export const rootApi = 'http://127.0.0.1:8000'
 // export const base_url = window.location.protocol
 export const protocol = 'http://'
 
