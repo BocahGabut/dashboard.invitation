@@ -3,7 +3,7 @@ import React from "react";
 
 const IconsI = dynamic(() => import('../../Utils/Icons'), { ssr: false })
 
-const FormStep5 = ({ subDomain,publish,setSubDomain,setPublish }) => {
+const FormStep5 = ({ subDomain, publish, setSubDomain, setPublish }) => {
 
     return (
         <>

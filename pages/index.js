@@ -6,6 +6,7 @@ import Layout from "../Components/Layout";
 const IconsI = dynamic(() => import('../Components/Utils/Icons'), { ssr: false })
 
 const Home = () => {
+
   return (
     <>
       <Layout activeSidebar="home">
@@ -21,7 +22,7 @@ const Home = () => {
                         paddingTop: '50%',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center top',
-                        backgroundImage: `url(${'https://storage.wedew.id/uploads/public/639/882/b08/thumb_1994853_400_300_0_0_auto.png'})`
+                        backgroundImage: `url('/images/theme/thumb_1654864_200_200_0_646_crop.jpg')`
                       }}
                     >
                       <div

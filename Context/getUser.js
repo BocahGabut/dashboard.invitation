@@ -12,10 +12,9 @@ const getUser = () => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${Cookies.get('auth-prefix')}`,
         }
+    }).then(response => {
+        return response.data;
     })
-        .then(response => {
-            return response.data;
-        })
         .catch(error => {
             directLogin(error.response.status)
         });

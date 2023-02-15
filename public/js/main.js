@@ -122,7 +122,7 @@
    var b = sessionStorage.getItem("defaultAttribute");
    b = JSON.parse(b);
    if (!(!b || "twocolumn" != layout_id && "twocolumn" != b["data-layout"])) {
-     document.querySelector(".navbar-menu").innerHTML = inactiveButton;
+    //  document.querySelector(".navbar-menu").innerHTML = inactiveButton;
      (tr = document.createElement("ul")).innerHTML = '<a href="#" class="logo"><img src="assets/images/logo-sm.png" alt="" height="22"></a>';
      Array.from(document.getElementById("navbar-nav").querySelectorAll(".menu-link")).forEach(function(e) {
        tr.className = "twocolumn-iconview";
@@ -162,7 +162,7 @@
          }
        }
      }
-     document.getElementById("two-column-menu").innerHTML = tr.outerHTML;
+    //  document.getElementById("two-column-menu").innerHTML = tr.outerHTML;
      Array.from(document.querySelector("#two-column-menu ul").querySelectorAll("li a")).forEach(function(a) {
        var tagName = (tagName = "/" == location.pathname ? "index.html" : location.pathname.substring(1)).substring(tagName.lastIndexOf("/") + 1);
        a.addEventListener("click", function(obj) {
@@ -219,22 +219,22 @@
      return top >= window.pageYOffset && left >= window.pageXOffset && top + fullHeight <= window.pageYOffset + window.innerHeight && left + width <= window.pageXOffset + window.innerWidth;
    }
  }
- function draw() {
-   if ("vertical" == document.documentElement.getAttribute("data-layout")) {
-     document.getElementById("two-column-menu").innerHTML = "";
-     document.querySelector(".navbar-menu").innerHTML = inactiveButton;
-     document.getElementById("scrollbar").setAttribute("data-simplebar", "");
-     document.getElementById("navbar-nav").setAttribute("data-simplebar", "");
-     document.getElementById("scrollbar").classList.add("h-100");
-   }
-   if ("twocolumn" == document.documentElement.getAttribute("data-layout")) {
-     document.getElementById("scrollbar").removeAttribute("data-simplebar");
-     document.getElementById("scrollbar").classList.remove("h-100");
-   }
-   if ("horizontal" == document.documentElement.getAttribute("data-layout")) {
-     reset();
-   }
- }
+//  function draw() {
+//    if ("vertical" == document.documentElement.getAttribute("data-layout")) {
+//     //  document.getElementById("two-column-menu").innerHTML = "";
+//     //  document.querySelector(".navbar-menu").innerHTML = inactiveButton;
+//     //  document.getElementById("scrollbar").setAttribute("data-simplebar", "");
+//     //  document.getElementById("navbar-nav").setAttribute("data-simplebar", "");
+//      document.getElementById("scrollbar").classList.add("h-100");
+//    }
+//    if ("twocolumn" == document.documentElement.getAttribute("data-layout")) {
+//      document.getElementById("scrollbar").removeAttribute("data-simplebar");
+//      document.getElementById("scrollbar").classList.remove("h-100");
+//    }
+//    if ("horizontal" == document.documentElement.getAttribute("data-layout")) {
+//      reset();
+//    }
+//  }
  function refresh() {
    feather.replace();
    var a = document.documentElement.clientWidth;
@@ -279,7 +279,7 @@
          document.body.classList.add("twocolumn-panel");
          if ("twocolumn" == sessionStorage.getItem("data-layout")) {
            document.documentElement.setAttribute("data-layout", "vertical");
-           show("vertical");
+          //  show("vertical");
            activateTimestamps();
          }
          if ("horizontal" != sessionStorage.getItem("data-layout")) {
@@ -530,7 +530,7 @@
  }
  function reset() {
    document.getElementById("two-column-menu").innerHTML = "";
-   document.querySelector(".navbar-menu").innerHTML = inactiveButton;
+  //  document.querySelector(".navbar-menu").innerHTML = inactiveButton;
    document.getElementById("scrollbar").removeAttribute("data-simplebar");
    document.getElementById("navbar-nav").removeAttribute("data-simplebar");
    document.getElementById("scrollbar").classList.remove("h-100");
@@ -554,7 +554,7 @@
  function show(name) {
    if ("vertical" == name) {
      document.getElementById("two-column-menu").innerHTML = "";
-     document.querySelector(".navbar-menu").innerHTML = inactiveButton;
+    //  document.querySelector(".navbar-menu").innerHTML = inactiveButton;
      if (document.getElementById("theme-settings-offcanvas")) {
        document.getElementById("sidebar-size").style.display = "block";
        document.getElementById("sidebar-view").style.display = "block";
@@ -563,7 +563,7 @@
        document.getElementById("layout-position").style.display = "block";
        document.getElementById("layout-width").style.display = "block";
      }
-     draw();
+    //  draw();
      click();
      bind();
      updateUI();
@@ -612,7 +612,7 @@
          callback("data-layout", "vertical");
          sessionStorage.setItem("data-layout", "vertical");
          document.documentElement.setAttribute("data-layout", "vertical");
-         show("vertical");
+        //  show("vertical");
          activateTimestamps();
          break;
        case "horizontal":
@@ -632,7 +632,7 @@
            callback("data-layout", "vertical");
            sessionStorage.setItem("data-layout", "vertical");
            document.documentElement.setAttribute("data-layout", "vertical");
-           show("vertical");
+          //  show("vertical");
            activateTimestamps();
          } else {
            if ("horizontal" == sessionStorage.getItem("data-layout")) {
@@ -969,7 +969,7 @@
        }
        if ("data-layout" == key) {
          if ("vertical" == event.value) {
-           show("vertical");
+          //  show("vertical");
            activateTimestamps();
            feather.replace();
          } else {
@@ -1066,7 +1066,7 @@
  var i;
  var list;
  var timer;
- var inactiveButton = document.querySelector(".navbar-menu").innerHTML;
+//  var inactiveButton = document.querySelector(".navbar-menu").innerHTML;
  var firstOccurrenceIdx = 7;
  var current = "en";
  var result = localStorage.getItem("language");
@@ -1221,7 +1221,7 @@
  }
  link();
  remove();
- draw();
+//  draw();
  if (document.getElementsByClassName("dropdown-item-cart")) {
    i = document.querySelectorAll(".dropdown-item-cart").length;
    Array.from(document.querySelectorAll("#page-topbar .dropdown-menu-cart .remove-item-btn")).forEach(function(e) {
@@ -1483,18 +1483,18 @@
    timer = setTimeout(check, 2e3);
  });
 }();
-var mybutton = document.getElementById("back-to-top");
-function scrollFunction() {
- if (100 < document.body.scrollTop || 100 < document.documentElement.scrollTop) {
-   mybutton.style.display = "block";
- } else {
-   mybutton.style.display = "none";
- }
-}
+// var mybutton = document.getElementById("back-to-top");
+// function scrollFunction() {
+//  if (100 < document.body.scrollTop || 100 < document.documentElement.scrollTop) {
+//    mybutton.style.display = "block";
+//  } else {
+//    mybutton.style.display = "none";
+//  }
+// }
 function topFunction() {
  document.body.scrollTop = 0;
  document.documentElement.scrollTop = 0;
 }
-window.onscroll = function() {
- scrollFunction();
-};
+// window.onscroll = function() {
+//  scrollFunction();
+// };

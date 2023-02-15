@@ -1,12 +1,35 @@
+import axios from "axios";
+import Cookies from "js-cookie";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../Components/Layout";
+import { protocol, rootApi } from "../../Context/config-app";
 
 const IconsI = dynamic(() => import('../../Components/Utils/Icons'), { ssr: false })
 
 const Settings = () => {
+    const [dataInvitation, setDataInvitation] = useState({})
+
+    useEffect(() => {
+        axios({
+            method: 'GET',
+            url: `${rootApi}/api/invitation/${Cookies.get('relix-prefix')}`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Cookies.get('auth-prefix')}`,
+            },
+        }).then(response => {
+            const result = response.data
+            console.log(result.data)
+            setDataInvitation(result.data)
+        }).catch((err) => {
+            if (err.response.status === 401) {
+                directLogin(err.response.status)
+            }
+        })
+    }, []);
     return (
         <>
             <Layout activeSidebar="settings">
@@ -16,17 +39,22 @@ const Settings = () => {
                             <div className="card-body">
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <h1 style={{ fontWeight: 600 }}>Weni & Dewa</h1>
+                                        <h1 style={{ fontWeight: 600 }}>{ dataInvitation.judul }</h1>
                                     </div>
                                     <div className="col-md-12">
                                         <p>
-                                            <em>Tambahkan deskripsi...</em>
+                                            {
+                                                (dataInvitation.description === null) ?
+                                                    <em>Tambahkan deskripsi...</em>
+                                                    :
+                                                    dataInvitation.description
+                                            }
                                         </p>
                                     </div>
                                     <div className="col-md-12 mt-3">
-                                        <Link href="/" className="btn btn-light mr-4">
+                                        <Link href={`${protocol}/${dataInvitation.url}.buywedding.site`} className="btn btn-light mr-4">
                                             <Image src='/images/logo-icon.svg' className="mr-2" width={16} height={16} alt="logo icons" />
-                                            testingwedding.wedew.id
+                                            { dataInvitation.url }.invedo.id
                                         </Link>
                                         <Link href="/settings/general" className="text-info">
                                             <IconsI icons='fa-regular fa-pen mr-4' />
@@ -41,9 +69,16 @@ const Settings = () => {
                         <div className="card no-shadow border-border">
                             <div className="card-body">
                                 <ul className="list-group">
-                                    <Link href='/' className="list-group-item">
-                                        <IconsI icons='fa-solid fa-cubes mr-3' />
-                                        Paket & Tambahan
+                                    <Link href='/' className="list-group-item d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <IconsI icons='fa-solid fa-cubes mr-3' />
+                                            Paket & Tambahan
+                                        </div>
+                                        <span className="badge rounded-pill badge-soft-dark">
+                                            {
+                                                (dataInvitation.packages) ? dataInvitation.packages.name : ''
+                                            } Package
+                                        </span>
                                     </Link>
                                     <Link href='/' className="list-group-item">
                                         <IconsI icons='fa-solid fa-cubes mr-3' />
@@ -62,7 +97,7 @@ const Settings = () => {
                             <div className="card-body">
                                 <div className="row">
                                     <div className="col-6 col-md-3 col-xl-2 mb-3 border-border text-center mt-3">
-                                        <Link href='/'>
+                                        <Link href='/website'>
                                             <lord-icon
                                                 src="https://cdn.lordicon.com/wloilxuq.json"
                                                 trigger="hover"

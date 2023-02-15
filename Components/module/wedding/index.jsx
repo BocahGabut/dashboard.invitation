@@ -11,8 +11,9 @@ import { toast, ToastContainer } from 'react-toastify';
 
 import axios from "axios";
 import Cookies from "js-cookie";
+import Router from "next/router";
 import 'react-toastify/dist/ReactToastify.css';
-import { rootApi } from "../../../Context/config-app";
+import { directLogin, rootApi } from "../../../Context/config-app";
 
 const Wedding = ({ setLoadInvitation, propsData }) => {
     const [formStep, setFormStep] = useState(1)
@@ -34,7 +35,10 @@ const Wedding = ({ setLoadInvitation, propsData }) => {
 
     //form step 5
     const [subDomain, setSubDomain] = useState((propsData.url) ? propsData.url : '')
-    const [publish, setPublish] = useState((propsData.status) ? ((propsData.status === 1) ? 'now' : 'later') : '')
+    const [publish, setPublish] = useState((propsData.couple) ? ((propsData.status === 1) ? 'now' : 'later') : '')
+
+    //form step 6
+    const [selectPackage, setSelectPackage] = useState((propsData.package_id) ? propsData.package_id : '')
 
     const handleSaveStep1 = () => {
         axios({
@@ -153,7 +157,45 @@ const Wedding = ({ setLoadInvitation, propsData }) => {
                 })
             }
         }).catch((err) => {
-            console.log(err)
+            if (err.response.status === 401) {
+                directLogin(err.response.status)
+            }
+        })
+    }
+
+    const handleSaveStep6 = () => {
+        if (selectPackage === '') {
+            return toast.error('Silahkan pillih salah satu dari paket yang ada', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            })
+        }
+        axios({
+            method: 'POST',
+            url: `${rootApi}/api/invitation/package`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Cookies.get('auth-prefix')}`,
+            },
+            data: {
+                _selectPackage: selectPackage,
+                _id: (Cookies.get('relix-prefix')) ? Cookies.get('relix-prefix') : ''
+            }
+        }).then(response => {
+            const result = response.data
+            if (result.status.indexOf('*OK*') != '-1') {
+                Router.push('/')
+            }
+        }).catch((err) => {
+            if (err.response.status === 401) {
+                directLogin(err.response.status)
+            }
         })
     }
 
@@ -183,7 +225,9 @@ const Wedding = ({ setLoadInvitation, propsData }) => {
             case 4:
                 return setFormStep(5), setProgress(80)
             case 5:
-                handleSaveStep5()
+                return handleSaveStep5()
+            case 6:
+                return handleSaveStep6()
         }
     }
 
@@ -255,13 +299,13 @@ const Wedding = ({ setLoadInvitation, propsData }) => {
                                     <FormStep3 propsData={propsData.events} setLoadInvitation={setLoadInvitation} countPost={countPost} setCountPost={setCountPost} />
                                 </div>
                                 <div className={`tab-pane fade show ${(formStep === 4) ? 'active' : ''}`} style={{ display: `${(formStep === 4) ? 'block' : 'none'}` }} id="pills-gen-info" role="tabpanel" aria-labelledby="pills-gen-info-tab">
-                                    <FormStep4 />
+                                    <FormStep4 propsData={propsData} setLoadInvitation={setLoadInvitation} countPost={countPost} setCountPost={setCountPost} />
                                 </div>
                                 <div className={`tab-pane fade show ${(formStep === 5) ? 'active' : ''}`} style={{ display: `${(formStep === 5) ? 'block' : 'none'}` }} id="pills-gen-info" role="tabpanel" aria-labelledby="pills-gen-info-tab">
                                     <FormStep5 subDomain={subDomain} setSubDomain={setSubDomain} publish={publish} setPublish={setPublish} />
                                 </div>
                                 <div className={`tab-pane fade show ${(formStep === 6) ? 'active' : ''}`} style={{ display: `${(formStep === 6) ? 'block' : 'none'}` }} id="pills-gen-info" role="tabpanel" aria-labelledby="pills-gen-info-tab">
-                                    <FormStep6 />
+                                    <FormStep6 propsData={propsData} selectPackage={selectPackage} setSelectPackage={setSelectPackage} />
                                 </div>
                             </div>
                             <div className="col-md-12 mt-7 d-flex">
